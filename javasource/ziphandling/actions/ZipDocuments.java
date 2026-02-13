@@ -15,8 +15,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import java.util.concurrent.TimeUnit;
@@ -58,7 +59,7 @@ public class ZipDocuments extends CustomJavaAction<IMendixObject>
 
 		ZipOutputStream zipStream = new ZipOutputStream(new FileOutputStream(tempZipFile));
 
-		List<String> fileList = new ArrayList<String>();
+		Set<String> fileList = new HashSet<String>();
 
 		for (system.proxies.FileDocument file : ListOfDocument) {
 			String fileName = file.getName();
