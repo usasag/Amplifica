@@ -727,7 +727,86 @@ export const columnChart = {
         }
     }
 };
-// TODO add bar chart styles
+// bar chart styles
+export const barChart = {
+    container: {},
+    errorMessage: {
+        fontFamily: font.family,
+        fontSize: font.sizeSmall,
+        fontWeight: font.weightNormal
+    },
+    chart: {},
+    grid: {
+        lineColor: border.color,
+        paddingBottom: 32,
+        paddingLeft: 32,
+        paddingRight: 8,
+        paddingTop: 8
+    },
+    xAxis: {
+        color: font.colorTitle,
+        fontFamily: font.family,
+        fontSize: font.sizeSmall,
+        fontWeight: font.weightNormal,
+        label: {
+            color: font.colorParagraph,
+            alignSelf: "center",
+            marginHorizontal: 0,
+            marginVertical: 8,
+            fontFamily: font.family,
+            fontSize: font.sizeSmall,
+            fontWeight: font.weightNormal
+        },
+        lineColor: border.color
+    },
+    yAxis: {
+        color: font.colorTitle,
+        fontFamily: font.family,
+        fontSize: font.sizeSmall,
+        fontWeight: font.weightNormal,
+        label: {
+            color: font.colorParagraph,
+            marginHorizontal: 0,
+            marginVertical: 8,
+            fontFamily: font.family,
+            fontSize: font.sizeSmall,
+            fontWeight: font.weightNormal
+        },
+        lineColor: border.color
+    },
+    bars: {
+        barColorPalette: Object.entries(brand)
+            .reduce((accumulator, [key, value]) => (key.endsWith("Light") ? accumulator : [...accumulator, value]), [])
+            .join(";"),
+        barsOffset: 20,
+        customBarStyles: {
+            your_static_or_dynamic_attribute_value: {
+                bar: {},
+                label: {}
+            }
+        }
+    },
+    legend: {
+        container: {
+            justifyContent: "flex-start",
+            marginHorizontal: 0,
+            marginVertical: spacing.small
+        },
+        item: {
+            padding: 0,
+            paddingRight: spacing.regular
+        },
+        indicator: {
+            marginRight: spacing.small
+        },
+        label: {
+            color: font.colorTitle,
+            fontFamily: font.family,
+            fontSize: font.sizeSmall,
+            fontWeight: font.weightNormal
+        }
+    }
+};
 // Gallery style
 export const gallery = {
     container: {},
