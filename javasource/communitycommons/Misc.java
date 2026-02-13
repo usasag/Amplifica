@@ -16,8 +16,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -158,7 +160,36 @@ public class Misc {
 		throw new WebserviceException(WebserviceException.clientFaultCode, faultstring);
 	}
 
+	private static void validateURL(String url) throws Exception {
+		URL u = new URL(url);
+		String protocol = u.getProtocol().toLowerCase();
+		if (!"http".equals(protocol) && !"https".equals(protocol)) {
+			throw new IllegalArgumentException("Invalid protocol: " + protocol);
+		}
+
+		InetAddress[] addresses = InetAddress.getAllByName(u.getHost());
+		for (InetAddress address : addresses) {
+			if (isInternalAddress(address)) {
+				throw new IllegalArgumentException("Internal/Local IP addresses are not allowed: " + address.getHostAddress());
+			}
+		}
+	}
+
+	private static boolean isInternalAddress(InetAddress address) {
+		if (address.isAnyLocalAddress() || address.isLoopbackAddress() || address.isLinkLocalAddress() || address.isSiteLocalAddress()) {
+			return true;
+		}
+
+		byte[] addr = address.getAddress();
+		if (addr.length == 16) { // IPv6
+			// Check for Unique Local Address (ULA) range fc00::/7
+			return ((addr[0] & 0xff) & 0xfe) == 0xfc;
+		}
+		return false;
+	}
+
 	public static String retrieveURL(String url, String postdata) throws Exception {
+		validateURL(url);
 		// Send data, appname
 		URLConnection conn = new URL(url).openConnection();
 
@@ -223,6 +254,12 @@ public class Misc {
 	public static Boolean storeURLToFileDocument(IContext context, String url, IMendixObject __document, String filename) throws IOException {
 		if (__document == null || url == null || filename == null) {
 			throw new IllegalArgumentException("No document, filename or URL provided");
+		}
+
+		try {
+			validateURL(url);
+		} catch (Exception e) {
+			throw new IOException(e.getMessage(), e);
 		}
 
 		final int MAX_REMOTE_FILESIZE = 1024 * 1024 * 200; //maximum of 200 MB
