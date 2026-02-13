@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 // END EXTRA CODE
 
 /**
- * Store a list of Mendix objects in device storage, identified by a unique key. Can be accessed by the GetStorageItemObject action. Please note that users can clear the device storage.
+ * Store a list of Mendix objects in device storage, identified by a unique key. Can be accessed by the GetStorageItemObjectList action. Please note that users can clear the device storage.
  * @param {string} key - This field is required.
  * @param {MxObject[]} value - This field is required.
  * @returns {Promise.<void>}

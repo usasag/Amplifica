@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 // END EXTRA CODE
 
 /**
- * Retrieve a local stored list of Mendix objects identified by a unique key. When objects are the client state it will be returned, if not they will be re-created. Note: when re-creating the local Mendix object the Mendix Object ID will never be the same.
+ * Retrieve a local stored list of Mendix objects identified by a unique key. When objects are in the client state they will be returned, if not they will be re-created. Note: when re-creating the local Mendix object the Mendix Object ID will never be the same.
  * @param {string} key - This field is required.
  * @param {string} entity - This field is required.
  * @returns {Promise.<MxObject[]>}
